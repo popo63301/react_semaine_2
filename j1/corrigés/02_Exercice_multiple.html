@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+      .heading {
+        color: purple;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const max_multiple_select = 20;
+      const max_multiple = 100;
+
+      const Numbers = (props) => {
+        const { numbers } = props;
+
+        return (
+          <ul>
+            {numbers.map((number, i) => {
+                const style = number % 3 == 0 ? {fontWeight: "bold", color: "blue"} : {}
+                return (
+              <li key={i} style={style} >{number}</li>
+            )})}
+          </ul>
+        );
+      };
+
+      const Form = (props) => {
+        const [number, setNumber] = React.useState(0);
+        const [numbers, setNumbers] = React.useState([]);
+        const [message, setMessage] = React.useState("");
+
+        const handleChange = (e) => {
+          setNumber(e.target.value);
+        };
+
+        // diviser pour mieux règner
+        const multiple = (number) => {
+          let listNumbers = []
+          let count = 1
+
+          while (true) {
+            // vous pouvez utiliser une variable local dans une constante la boucle scope à chaque la constante
+            const mult = count * number;
+
+            if (mult > max_multiple) break;
+
+            listNumbers = [...listNumbers, mult];
+            count++;
+          }
+
+          return listNumbers;
+        };
+
+        const handleSubmit = (event) => {
+          event.preventDefault(); // première chose à faire
+
+          if (number == 0) {
+            setMessage(`Attention vous n'avez pas choisi de multiple.`);
+            setNumber(0);
+            setNumbers([]);
+
+            return;
+          }
+
+          const thanksMessage = "Merci pour votre choix";
+
+          setNumbers(multiple(number));
+          setMessage(thanksMessage);
+        };
+
+        return (
+          <React.Fragment>
+            {message && <p>{message}</p>}
+            <form onSubmit={handleSubmit}>
+              <select name="number" value={number} onChange={handleChange}>
+                {[...Array(max_multiple_select).keys()].map((num, i) => (
+                  <option value={num + 1} key={i}>
+                    {num + 1}
+                  </option>
+                ))}
+                <option value="0">Aucune</option>
+              </select>
+              <input type="submit" value="Calculer" />
+            </form>
+            {numbers.length > 0 && <Numbers numbers={numbers} />}
+          </React.Fragment>
+        );
+      };
+
+      // Rendu dans le DOM
+      ReactDOM.render(<Form />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
