@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+      .heading {
+        color: purple;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const Form = (props) => {
+        const [user, setUser] = React.useState({ username: "", email: "" });
+
+        const handleChange = (event) => {
+          const {name, value} = event.target
+          setUser({...user, [name]: value });
+        };
+
+        const handleSubmit = (event) => {
+          event.preventDefault();
+          console.log(`New User : `, user);
+        };
+
+        const { username, email } = user;
+        
+        return (
+          <form onSubmit={handleSubmit}>
+            <Input
+              type="text"
+              name="username"
+              value={username}
+              onChange={handleChange}
+            />
+            <Input
+              type="email"
+              name="email"
+              value={email}
+              onChange={handleChange}
+            />
+            <input type="submit" value="Add" />
+          </form>
+        );
+      };
+
+      const Input = (props) => {
+        return (
+          <div style={{ margin: "10px" }}>
+            <input {...props} />
+          </div>
+        );
+      };
+
+      // Rendu dans le DOM
+      ReactDOM.render(<Form />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

@@ -57,6 +57,8 @@ const function Form (props) {
     event.preventDefault();
   };
 
+  const {username, email} = user
+
   return (
     <form onSubmit={handleSubmit}>
       <Input

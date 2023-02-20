@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+      .heading {
+        color: purple;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const Foo = () => {
+        const [counter, setCounter] = React.useState(0);
+
+        const handleChange = (e) => {
+          console.log("parent", e);
+        };
+
+        return (
+          <React.Fragment>
+            <Bar
+              onChange={handleChange}
+              counter={counter}
+              setCounter={setCounter}
+            />
+            <BarBrother counter={counter} setCounter={setCounter} />
+          </React.Fragment>
+        );
+      };
+
+      const Bar = (props) => {
+        return (
+          <p>
+            <button onClick={() => props.onChange(1)}>Lifting state up</button>{" "}
+            <br />
+            <button onClick={() => props.setCounter(props.counter + 1)}>
+              Increment
+            </button>
+          </p>
+        );
+      };
+
+      const BarBrother = (props) => (
+        <div>Je suis le frère et je peux lire counter: {props.counter} </div>
+      );
+
+      // Rendu dans le DOM
+      ReactDOM.render(<Foo />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
