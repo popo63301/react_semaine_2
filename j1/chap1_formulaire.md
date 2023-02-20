@@ -194,3 +194,7 @@ Multiple de 11 :
 ...
 99
 ```
+
+### Bonus =
+
+Mettre en gras et en bleu dans résultat tout les nombres divisibles par 3.
