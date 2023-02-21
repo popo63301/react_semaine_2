@@ -233,3 +233,70 @@ function Signup() {
   );
 }
 ```
+
+---
+
+### Fonction / Appel de fonction
+
+```js
+const createAction = () => {
+  return {
+    type: "ADD_TODO",
+    title: "go to Carrefour",
+  };
+};
+```
+
+```js
+const createAction = () => ({
+  type: "ADD_TODO",
+  title: "go to Carrefour",
+});
+```
+
+### fonction fléché
+
+- cas fonction simple:
+
+```js
+const add = (a, b) => a + b;
+```
+
+(a,b) = entrée
+après "=>" = sortie (valeur return)
+
+- cas fonction plus grosse:
+
+```js
+const addWithConsoleLog = (a, b) => {
+  console.log("ligne 1");
+  console.log(a);
+  console.log(b);
+  return a + b;
+};
+```
+
+(a,b) = entrée
+entre les accolades = bloc de code
+et il faut un return explicite (si on veut return une valeure)
+
+moyen mnémotechnique / accolade = bloc de code et il faut return
+
+si on veut retourner objet, il faut des parenthèses autour
+
+---
+
+### Fonction / Appel de fonction
+
+```js
+const createAction = () => ({
+  type: "ADD_TODO",
+  title: "go to Carrefour",
+});
+```
+
+si on fait:
+`createAction`
+
+createAction = nom de la fonction
+createAction() = appel de la fonction = sera remplacé par la valeur de return (donc la partie à droite de la flèche)
