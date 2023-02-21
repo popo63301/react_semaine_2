@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const CONTAINER = document.getElementById('root');
+    const Message = ({ message, color }) => (<div style={color}>{message}</div>);
+
+    const BaseNumberInput = ({ number, base, onChangeBase }) => {
+
+      const handleChange = (e) => {
+        const { value: num, name: base } = e.target;
+
+        onChangeBase(num, base);
+      }
+
+      const label = { padding: "5px", display: 'block' };
+
+      return (
+        <React.Fragment>
+          <label style={label} >Base : {base}</label>
+          <input
+            type="text"
+            name={base}
+            value={number}
+            onChange={handleChange}
+          />
+        </React.Fragment>
+      )
+    }
+
+    const initialState = {
+      number: '',
+      conversion: '',
+      base: 10,
+      message: ''
+    }
+
+    const reducer = (state, action) => {
+      switch (action.type) {
+        case 'SET_NUMBER':
+          const { number, base } = action;
+          const parsed = parseInt(number, base); // transformer string en nombre
+
+          if (number  && base == 10)
+            return { ...state, conversion: parseInt(number, base).toString(2), number };
+
+          if (number && base == 2)
+            return { ...state, conversion: number, number: parsed };
+
+          return {
+            ...state, number: '', conversion: ''
+          }
+
+        default:
+          throw new Error();
+      }
+    }
+
+    const App = (props) => {
+      const [state, dispatch] = React.useReducer(reducer, initialState);
+      const { base, number, conversion } = state;
+      const onChangeBase = (number, base) => {
+        dispatch({ type: 'SET_NUMBER', number, base });
+      }
+
+      return (
+        <React.Fragment>
+          <BaseNumberInput base="10" onChangeBase={onChangeBase} number={number} />
+          <BaseNumberInput base="2" onChangeBase={onChangeBase} number={conversion} />
+        </React.Fragment>
+      )
+    }
+
+    ReactDOM.render(
+      <App />,
+      CONTAINER
+    );
+
+  </script>
+</body>
+
+</html>
