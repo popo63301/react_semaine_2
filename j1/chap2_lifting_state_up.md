@@ -88,3 +88,33 @@ const function Input (props) (
   </div>
 );
 ```
+
+---
+
+### Reducer
+
+```js
+{
+  // tout notre state, tient en un objet
+}
+```
+
+- increment
+- decrement
+- reset
+
+```js
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "INCREMENT":
+      return { ...state, counter: state.counter + 1 };
+    case "DECREMENT":
+      return { ...state, counter: state.counter - 1 };
+    case "RESET":
+      return { ...state, counter: 0 };
+
+    default:
+      return state;
+  }
+};
+```
