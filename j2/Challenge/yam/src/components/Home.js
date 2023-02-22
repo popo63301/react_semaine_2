@@ -1,17 +1,32 @@
+import { useReducer } from "react";
 import { NavLink } from "react-router-dom";
 
-const Home = (props) => {
+import { reducer, initialState } from "../reducer";
+
+const Home = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { number, count, isLoading } = state;
+
+  const handleChange = (event) => {
+    dispatch({ type: "SET_NUMBER", number: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch({ type: "CALCUL" });
+  };
   return (
     <>
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <p>
           <label>
             <small>Nombre d'expérience(s)</small>
             <input
               size="5"
               type="text"
-              value={props.number}
-              onChange={props.handleChange}
+              value={number}
+              onChange={handleChange}
             />
           </label>
         </p>
@@ -21,9 +36,7 @@ const Home = (props) => {
       </form>
 
       <p>
-        <NavLink to={{ pathname: `/statistic/${props.count}` }}>
-          Resultat
-        </NavLink>
+        <NavLink to={{ pathname: `/statistic/${count}` }}>Resultat</NavLink>
       </p>
     </>
   );

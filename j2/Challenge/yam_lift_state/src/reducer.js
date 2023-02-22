@@ -1,11 +1,11 @@
-const initialState = { count: 0, number: 1};
+const initialState = { count: 0, number: 1 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "CALCUL":
       return {
         ...state,
-        count : calcul(state.number),
+        count: calcul(state.number),
       };
 
     case "SET_NUMBER":
@@ -24,9 +24,9 @@ const calcul = (number) => {
 
   while (number > 0) {
     const lancer = [de(), de(), de()];
-    if ( lancer.reduce((acc, curr) => acc + curr) === 18) count++;
+    if (lancer.reduce((acc, curr) => acc + curr) === 18) count++;
     number--;
-    console.log(lancer.reduce((acc, curr) => acc + curr))
+    console.log(lancer.reduce((acc, curr) => acc + curr));
   }
 
   return count;
