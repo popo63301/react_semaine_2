@@ -122,3 +122,56 @@ Le switch case du reducer va chercher le cas du type de l'action,
 une fois trouvé, il va faire ce qu'il a à faire et retourner un nouveau state pour le sauvegarder dans le store.
 
 Une fois qu'on retourne le state, on a modifié le store, donc la donnée.
+
+---
+
+Petite note "subscribe"
+
+Subscribe = abonnement dès la modification du store, donc après le travail du reducer après réception d'une action envoyé par dispatch
+
+Subscribe = qu'est-ce qu'on fait quand le store a été modifié
+
+---
+
+Résumé modification donnée avec Redux =
+
+- on ne change pas directement la donnée (comme dans une variable)
+- on va décrire ce qu'on veut faire (action), et le reducer se chargera de modifier les données du store
+
+---
+
+### Lecture de donnée
+
+Il faut créer une connection avec le store.
+
+Maintenant, la connection dépend de notre contexte (est-ce qu'on fait du React ? est-ce qu'on fait du vueJs ?)
+
+Notre connection se fera avec une librairie tierce: `react-redux`.
+
+---
+
+### React-redux
+
+React-redux c'est une boîte à outil pour:
+
+- se connecter au store depuis React
+
+Il y a 2 composants:
+
+- Le Provider = fournisseur de store (permettra de stocker le store en haut de la hierarchie de composant)
+  - règle provideur = tout les enfants du fournisseur peuvent se fournir, mais les parents du fournisseurs ne peuvent pas se fournir
+  - par conséquent, on met le fournisseur au plus haut point de l'application
+- des hooks de connections
+  - pour lire des données = `useSelector`
+  - pour dispatcher des actions (pour modification) = `useDispatch`
+
+```js
+import { useDispatch, useSelector } from "react-redux";
+
+export const App = (props) => {
+  const stateDuStore = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  return <div>Composant = {stateDuStore.counter}</div>;
+};
+```
